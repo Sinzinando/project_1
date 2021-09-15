@@ -1,7 +1,7 @@
-###################################
+#########################################
 # Script de instalação dos pacotes 
 # R version 4.1.1
-####################################
+#################################olarrrrrrrrrrrr
 
 ## Usamos o seguinte comando para a instalação dos pacotes que estão no CRAN do R (faça isso caso estes pacotes NÃO ESTEJAM INSTALADOS). 
 ## Obs.: A instalação só precisa ser feita uma vez. 
