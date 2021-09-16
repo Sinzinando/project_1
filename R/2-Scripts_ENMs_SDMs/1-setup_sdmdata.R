@@ -16,27 +16,21 @@ library(raster)
 
 ### Importando e lendo sua planilha no ambiente R. read.csv é uma função para ler a extensão .csv. NO argumento "file" coloque o caminho relativo do arquivo .csv , no arquivo "sep" indique qual o tipo de separado dos campos (o que separa as colunas).
 
-sp_input <- read.csv(file = "./dados/ocorrencias/sp_input_setupsdmdata.csv", sep = ",") # 
+sp_input <- read.csv(file = "./dados/ocorrencias/sp_input_setupsdmdata.csv", sep = ",") 
 
-#####Colocando os (-) entre gênero e espécie
+## Colocando no formato exigido pelo pacote: species name separated by "_" 
 sp_input$species <-
   gsub(x = sp_input$species,
        pattern = " ",
-       replacement = "_")
+       replacement = "_") 
 
-##### Visualizando os dados
-(sp_input)
-
-### View(sp_input) = abrir tabela de dados
 
 ## Carregando as variáveis ambientais
 
 lista_arquivos <- list.files("./dados/raster/variaveis_cortadas_pratica/", full.names = T, pattern = ".tif")
 
 vars_stack <-stack(lista_arquivos)
-plot(vars_stack)
-### plot(vars_stack[[1]]) = para ver cada uma das variaveis, é só mudar o número
-
+plot(vars_stack[[12]])
 
 ## Verificando os pontos nas variáveis mais um vez. Isso pode ser feito previamente no Qgis. Em termos de verificação de pontos, ou verificar valores de pixel de forma mais rápida, o Qgis pode ser mais apropriado. 
 ## Talvez não seja possível gerar a imagem e código abaixo não funcione a cuse um erro. Por isso é aconselhável que seja feita a verificação dos pontos em cimas das camadas ambientais no Qgis.
@@ -52,25 +46,23 @@ for (i in 1:length(sp_input)) {
 ## modler função 1
 
 setup_sdmdata_1 <- setup_sdmdata(species_name = unique(sp_input[1]), 
-              occurrences = sp_input,
-              lon = "lon",
-              lat = "lat",
-              predictors = vars_stack,
-              models_dir = "./resultados",
-              partition_type = "crossvalidation",
-              cv_partitions = 3,
-              cv_n = 1,
-              seed = 512,
-              buffer_type = "mean",
-              png_sdmdata = TRUE,
-              n_back = 30,
-              clean_dupl = TRUE,
-              clean_uni = TRUE,
-              clean_nas = TRUE,
-              geo_filt = FALSE,
-              geo_filt_dist = 10,
-              select_variables = TRUE,
-              sample_proportion = 0.5,
-              cutoff = 0.7)
-
-
+                                 occurrences = sp_input,
+                                 lon = "lon",
+                                 lat = "lat",
+                                 predictors = vars_stack,
+                                 models_dir = "./resultados",
+                                 partition_type = "crossvalidation",
+                                 cv_partitions = 3,
+                                 cv_n = 1,
+                                 seed = 512,
+                                 buffer_type = "mean",
+                                 png_sdmdata = TRUE,
+                                 n_back = 30,
+                                 clean_dupl = TRUE,
+                                 clean_uni = TRUE,
+                                 clean_nas = TRUE,
+                                 #geo_filt = FALSE,
+                                 #geo_filt_dist = 0,
+                                 select_variables = TRUE,
+                                 sample_proportion = 0.5,
+                                 cutoff = 0.7)
